@@ -1,0 +1,114 @@
+import java.util.Objects;
+
+class Computer
+{
+    String name;
+    Computer before;
+    Computer after;
+
+    public Computer(String name) { this.name = name; }
+    public Computer(String name, Computer before) {
+        this.name = name;
+        this.before = before;
+    }
+}
+
+class Shop
+{
+    Computer first;
+    Computer last;
+    int total = 0;
+
+    public void add(String name)
+    {
+        if (this.first == null)
+        {
+            this.first = new Computer(name);
+            this.last = this.first;
+        }
+        else
+        {
+            this.last = new Computer(name, this.last);
+            this.last.before.after = this.last;
+        }
+        this.total++;
+    }
+
+    public void remove(String name)
+    {
+        Computer checker = this.first;
+        for (int i = 0; i < this.total; i++)
+        {
+            if (Objects.equals(checker.name, name))
+            {
+                this.total--;
+                if (checker == this.first)
+                {
+                    checker.after.before = null;
+                    this.first = checker.after;
+                    System.out.println(name + " удален!");
+                    break;
+                }
+                if (checker == this.last)
+                {
+                    checker.before.after = null;
+                    this.last = checker.before;
+                    System.out.println(name + " удален!");
+                    break;
+                }
+                checker.after.before = checker.before;
+                checker.before.after = checker.after;
+                System.out.println(name + " удален!");
+                break;
+            }
+            checker = checker.after;
+        }
+        if (checker == this.last) { System.out.println("Такого компьютера не существует!"); }
+    }
+
+    public void find(String name)
+    {
+        Computer checker = this.first;
+        int index = 1;
+        do
+        {
+            if (Objects.equals(checker.name, name))
+            {
+                System.out.println("Компьютер найден! Индекс: " + index);
+                break;
+            }
+            checker = checker.after;
+            index++;
+        } while (checker != this.last);
+        if (checker == this.last) { System.out.println("Такого компьютера не существует!"); }
+    }
+
+    public int length() { return total; }
+    public void all()
+    {
+        Computer checker = this.first;
+        System.out.print("[");
+        for (int i = 0; i < this.total - 1; i++)
+        {
+            System.out.print(checker.name + ", ");
+            checker = checker.after;
+        }
+        System.out.println(checker.name + "]");
+    }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Shop pyaterka = new Shop();
+        pyaterka.add("Apple");
+        pyaterka.add("Google");
+        pyaterka.add("Samsung");
+        pyaterka.add("Honor");
+        pyaterka.find("Samsung");
+        pyaterka.all();
+        pyaterka.remove("Google");
+        pyaterka.all();
+    }
+}
