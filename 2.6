@@ -1,0 +1,28 @@
+class Circle
+{
+    double radius;
+
+    public Circle(double radius) { this.radius = radius; }
+
+    public double area() { return this.radius * this.radius * Math.PI; }
+    public double length() { return 2 * this.radius * Math.PI; }
+    public static void check(Circle a, Circle b)
+    {
+        if (a.radius > b.radius) System.out.println(a.radius + " > " + b.radius);
+        else if (a.radius < b.radius) System.out.println(a.radius + " < " + b.radius);
+        else System.out.println(a.radius + " == " + b.radius);
+    }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Circle a = new Circle(12.3);
+        Circle b = new Circle(7.2);
+        Circle c = new Circle(13.067);
+        System.out.println("C area - " + c.area());
+        System.out.println("B length - " + b.length());
+        Circle.check(a, b);
+    }
+}
