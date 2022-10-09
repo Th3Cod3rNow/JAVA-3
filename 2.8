@@ -1,0 +1,17 @@
+public class Main
+{
+    public static void main(String[] args)
+    {
+        String[] mass = {"Hello", "my", "name", "big", "baby", "Hello", "my", "name", "big", "baby"};
+        for (int i = 0; i < mass.length / 2; i++)
+        {
+            String a = mass[mass.length - 1 - i];
+            mass[mass.length - 1 - i] = mass[i];
+            mass[i] = a;
+        }
+        for (String k : mass)
+        {
+            System.out.print(k + " ");
+        }
+    }
+}
