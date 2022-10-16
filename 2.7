@@ -1,0 +1,120 @@
+class Book
+{
+    String author;
+    String name;
+    int year;
+    Book before;
+    Book after;
+
+    public Book(String author, String name, int year) { this.author = author; this.name = name; this.year = year;}
+    public Book(String author, String name, int year , Book before) {
+        this.author = author;
+        this.name = name;
+        this.year = year;
+        this.before = before;
+    }
+
+    @Override
+    public String toString() {
+        return "Book {" +
+                "author='" + author + '\'' +
+                ", name='" + name + '\'' +
+                ", year=" + year +
+                "}";
+    }
+}
+
+class Shelf
+{
+    Book first;
+    Book last;
+    int total = 0;
+
+    public void add(String author, String name, int year)
+    {
+        if (this.first == null)
+        {
+            this.first = new Book(author, name, year);
+            this.last = this.first;
+        }
+        else
+        {
+            this.last = new Book(author, name, year, this.last);
+            this.last.before.after = this.last;
+        }
+        this.total++;
+    }
+
+    public void find()
+    {
+        Book checker = this.first;
+        Book minimum = this.first;
+        Book maximum = this.first;
+        do
+        {
+            if (checker.year < minimum.year) minimum = checker;
+            else if (checker.year > maximum.year) maximum = checker;
+            checker = checker.after;
+        } while (checker != this.last);
+        if (this.last.year < minimum.year) minimum = checker;
+        if (this.last.year > maximum.year) maximum = checker;
+        System.out.println("Early - " + minimum);
+        System.out.println("Late - " + maximum);
+    }
+
+    public void sorting()
+    {
+        for (int i = 0; i < total; i++)
+        {
+            Book checker = this.first;
+            for (int j = 1; j < total; j++)
+            {
+                if (checker.after.year < checker.year)
+                {
+                    Book helper = checker.after.after;
+                    if (checker.before != null) checker.before.after = checker.after;
+                    if (checker.after.after != null) checker.after.after.before = checker;
+                    checker.after.before = checker.before;
+                    checker.after.after = checker;
+                    checker.before = checker.after;
+                    checker.after = helper;
+                    if (checker == this.first) this.first = checker.before;
+                    continue;
+                }
+                checker = checker.after;
+            }
+        }
+    }
+
+    public int length() { return total; }
+
+    public void all()
+    {
+        Book checker = this.first;
+        System.out.print("[");
+        for (int i = 0; i < this.total - 1; i++)
+        {
+            System.out.print(checker.name + ", ");
+            checker = checker.after;
+        }
+        System.out.println(checker.name + "]");
+    }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Shelf polka = new Shelf();
+        polka.add("Салтыков-Щедрин", "Седьмая", 1957);
+        polka.add("Гоголь", "Четвертая", 1857);
+        polka.add("Пушкин", "Первая", 1820);
+        polka.add("Толстой", "Третья", 1844);
+        polka.add("Цветаева", "Шестая", 1902);
+        polka.add("Лермонтов", "Вторая", 1837);
+        polka.add("Тургенев", "Пятая", 1876);
+        polka.all();
+        polka.sorting();
+        polka.all();
+    }
+}
