@@ -1,0 +1,30 @@
+interface Nameable
+{
+    String getName();
+}
+
+class Car implements Nameable
+{
+    String name;
+    int year;
+
+    public Car(String name, int year) {
+        this.name = name;
+        this.year = year;
+    }
+
+    public String getName()
+    {
+        return this.name;
+    }
+
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Nameable machine = new Car("Volga", 1983);
+        System.out.println(machine.getName());
+    }
+}
