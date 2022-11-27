@@ -1,0 +1,22 @@
+public class Main
+{
+    public static void main(String[] args)
+    {
+        int[] array = new int[4];
+        int checker = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            array[i] = 10 + (int)(Math.random() * 89);
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            System.out.print(array[i] + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < 3; i++)
+        {
+            checker += array[i] > array[i + 1] ? 1 : 0;
+        }
+        System.out.println(checker == 0 ? "СТРОГО ВОЗРАСТАЕТ" : "НЕ ВОЗРАСТАЕТ");
+    }
+}
