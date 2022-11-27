@@ -1,0 +1,55 @@
+class Shape
+{
+    Class<? extends Shape> getType()
+    {
+        return this.getClass();
+    }
+}
+
+class Circle extends Shape
+{
+    double getArea(double R)
+    {
+        return Math.PI * Math.pow(R, 2);
+    }
+
+    double getPerimeter(double R)
+    {
+        return 2 * Math.PI * R;
+    }
+}
+
+class Rectangle extends Shape
+{
+    double getArea(double A, double B)
+    {
+        return A * B;
+    }
+
+    double getPerimeter(double A, double B)
+    {
+        return 2 * (A + B);
+    }
+}
+
+class Square extends Shape
+{
+    double getArea(double A)
+    {
+        return Math.pow(A, 2);
+    }
+
+    double getPerimeter(double A)
+    {
+        return 4 * A;
+    }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Rectangle ob = new Rectangle();
+        System.out.println(ob.getArea(12.3, 1.264));
+    }
+}
