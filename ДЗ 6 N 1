@@ -1,24 +1,9 @@
 interface Movable
 {
-    default void moveUp()
-    {
-        System.out.println("ВВЕРХ /\\");
-    }
-
-    default void moveDown()
-    {
-        System.out.println("ВНИЗ \\/");
-    }
-
-    default void moveLeft()
-    {
-        System.out.println("ВЛЕВО <");
-    }
-
-    default void moveRight()
-    {
-        System.out.println("ВПРАВО >");
-    }
+    void moveUp();
+    void moveDown();
+    void moveLeft();
+    void moveRight();
 }
 
 class MovablePoint implements Movable
@@ -35,6 +20,11 @@ class MovablePoint implements Movable
         this.ySpeed = ySpeed;
     }
 
+    public void moveUp() { ySpeed += 1; }
+    public void moveDown() { ySpeed -= 1; }
+    public void moveLeft() { xSpeed += 1; }
+    public void moveRight() { xSpeed -= 1; }
+
     @Override
     public String toString() {
         return "MovablePoint{" +
@@ -49,7 +39,7 @@ class MovablePoint implements Movable
 class MovableCircle extends MovablePoint implements Movable
 {
     int radius;
-    MovablePoint center = new MovablePoint(0, 0, 10, 0);
+    MovablePoint center = new MovablePoint(0, 0, 0, 0);
 
     public MovableCircle(int x, int y, int xSpeed, int ySpeed, int radius) {
         super(x, y, xSpeed, ySpeed);
@@ -70,6 +60,10 @@ public class Main
     public static void main(String[] args)
     {
         Movable point = new MovablePoint(0, 0, 0, 0);
-        point.moveDown();
+        System.out.println(point);
+        point.moveUp();
+        point.moveUp();
+        point.moveUp();
+        System.out.println(point);
     }
 }
