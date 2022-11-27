@@ -1,0 +1,22 @@
+public class Main
+{
+    public static void main(String[] args)
+    {
+        enum Seasons
+        {
+            WINTER(-7.43),
+            SPRING(6.1),
+            SUMMER(21.6),
+            AUTUMN(9.3);
+
+            private final double average;
+
+            Seasons(double average) {
+                this.average = average;
+            }
+        }
+
+        Seasons favourite = Seasons.SPRING;
+        System.out.println(favourite.average);
+    }
+}
