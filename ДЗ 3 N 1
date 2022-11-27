@@ -1,0 +1,27 @@
+import java.util.Arrays;
+import java.util.Random;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        double[] array = new double[10];
+        Random helper = new Random();
+        for (int i = 0; i < 10; i++)
+        {
+            // array[i] = Math.random();
+            array[i] = helper.nextDouble();
+        }
+        System.out.println("UNSORTED");
+        for (int i = 0; i < 10; i++)
+        {
+            System.out.print(array[i] + " ");
+        }
+        Arrays.sort(array);
+        System.out.println("\nSORTED");
+        for (int i = 0; i < 10; i++)
+        {
+            System.out.print(array[i] + " ");
+        }
+    }
+}
