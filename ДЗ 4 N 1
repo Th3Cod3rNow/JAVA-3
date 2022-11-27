@@ -1,0 +1,16 @@
+public class Main
+{
+    public static void main(String[] args)
+    {
+        enum Seasons
+        {
+            WINTER,
+            SPRING,
+            SUMMER,
+            AUTUMN
+        }
+
+        Seasons favourite = Seasons.WINTER;
+        System.out.println(favourite);
+    }
+}
