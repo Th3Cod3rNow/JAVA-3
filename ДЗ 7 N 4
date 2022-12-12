@@ -1,0 +1,42 @@
+interface MathCalculable
+{
+    static double PI()
+    {
+        double out = 0;
+        for (int n = 0; n < 10000; n++) { out += pow(-1, n) * 1 / (2 * n + 1); } // Формула Лейбница
+        return out * 4;
+    }
+
+    static double pow(double x, double degree)
+    {
+        double out = 1;
+        for (int d = 0; d < degree; d++) { out *= x; }
+        return out;
+    }
+
+    static double abs(double Re, double Im)
+    {
+        return pow(pow(Re, 2) + pow(Im, 2), 0.5);
+    }
+
+    double circumference();
+
+}
+
+class MathFunc implements MathCalculable
+{
+    double radius;
+
+    public MathFunc(double radius) { this.radius = radius; }
+
+    public double circumference() { return 2 * MathCalculable.PI() * this.radius; }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        MathCalculable circle = new MathFunc(3.4);
+        System.out.println(circle.circumference());
+    }
+}
