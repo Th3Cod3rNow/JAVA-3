@@ -1,0 +1,151 @@
+import java.util.Objects;
+
+class Dog
+{
+    String name;
+    double age;
+    Dog before;
+    Dog after;
+
+    public Dog(String name, double age) { this.name = name; this.age = age;}
+    public Dog(String name, double age , Dog before) {
+        this.name = name;
+        this.age = age;
+        this.before = before;
+    }
+
+    @Override
+    public String toString() {
+        return "Dog { " +
+                "name = '" + name + '\'' +
+                ", age = " + age +
+                " }";
+    }
+}
+
+class Nursery
+{
+    Dog first;
+    Dog last;
+    int total = 0;
+
+    public void add(String name, double age)
+    {
+        if (this.first == null)
+        {
+            this.first = new Dog(name, age);
+            this.last = this.first;
+        }
+        else
+        {
+            this.last = new Dog(name, age, this.last);
+            this.last.before.after = this.last;
+        }
+        this.total++;
+    }
+
+    public void remove(String name)
+    {
+        Dog checker = this.first;
+        for (int i = 0; i < this.total; i++)
+        {
+            if (Objects.equals(checker.name, name))
+            {
+                this.total--;
+                if (checker == this.first)
+                {
+                    checker.after.before = null;
+                    this.first = checker.after;
+                    System.out.println(name + " отдан(а) в хорошие руки!");
+                    break;
+                }
+                if (checker == this.last)
+                {
+                    checker.before.after = null;
+                    this.last = checker.before;
+                    System.out.println(name + " отдан(а) в хорошие руки!");
+                    break;
+                }
+                checker.after.before = checker.before;
+                checker.before.after = checker.after;
+                System.out.println(name + " отдан(а) в хорошие руки!");
+                break;
+            }
+            checker = checker.after;
+        }
+        if (checker == this.last) { System.out.println("Собаки с таким именем нет в питомнике!"); }
+    }
+
+    public void find(String name)
+    {
+        if (isEmpty())
+        {
+            System.out.println("Список пуст.");
+            return;
+        }
+        Dog checker = this.first;
+        int index = 1;
+        do
+        {
+            if (Objects.equals(checker.name, name))
+            {
+                System.out.println("Собака найдена! Номер комнаты: " + index);
+                System.out.println(checker);
+                break;
+            }
+            checker = checker.after;
+            index++;
+        } while (checker != this.last);
+        if (checker == this.last) { System.out.println("Собаки с таким именем нет в питомнике!"); }
+    }
+
+    public int length() { return total; }
+    public void all()
+    {
+        if (isEmpty())
+        {
+            System.out.println("Список пуст.");
+            return;
+        }
+        Dog checker = this.first;
+        System.out.print("[");
+        for (int i = 0; i < this.total - 1; i++)
+        {
+            System.out.print(checker.name + ", ");
+            checker = checker.after;
+        }
+        System.out.println(checker.name + "]");
+    }
+
+    public void clear()
+    {
+        Dog checker = this.last;
+        while (checker != this.first)
+        {
+            checker = this.last.before;
+            remove(checker.after.name);
+        }
+        this.first = null;
+    }
+
+    public boolean isEmpty() { return this.first == null; }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Nursery farm = new Nursery();
+        farm.add("Bob", 3);
+        farm.add("Lana", 1.5);
+        farm.add("Lucy", 4);
+        farm.add("George", 2.5);
+        farm.add("Nana", 7);
+        farm.all();
+        farm.find("George");
+        System.out.println(farm.isEmpty());
+        farm.clear();
+        System.out.println(farm.isEmpty());
+        farm.all();
+    }
+}
