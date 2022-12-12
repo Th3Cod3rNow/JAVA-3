@@ -1,0 +1,17 @@
+public class Main
+{
+    public static void main(String[] args)
+    {
+        subsequence(10, 1);
+    }
+
+    public static void subsequence(int x, int y)
+    {
+        for (int i = 0; i < y; i++)
+        {
+            System.out.print(y + " ");
+        }
+        x--;
+        if (x > 0) subsequence(x, y + 1);
+    }
+}
