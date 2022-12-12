@@ -1,0 +1,20 @@
+public class Main
+{
+    public static void main(String[] args)
+    {
+        System.out.println(summ(555555, 6));
+    }
+
+    public static int summ(int x, int length)
+    {
+        if (length > 0) return (int)(x / pow(10, length - 1))
+                + summ((int) (x % pow(10, length - 1)), length - 1);
+        return 0;
+    }
+
+    private static double pow(double x, int y) {
+        double out = 1;
+        for (int i = 0; i < y; i++) { out *= x; }
+        return out;
+    }
+}
