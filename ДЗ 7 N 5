@@ -1,0 +1,52 @@
+interface StringAnalysis
+{
+    int counter();
+    StringBuilder shorty();
+    StringBuilder invert();
+}
+
+class MyString implements StringAnalysis
+{
+    String str;
+    MyString(String str) { this.str = str; }
+
+    public int counter()
+    {
+        int out = 0;
+        for (char s : this.str.toCharArray()) { out += 1; }
+        return out;
+    }
+
+    public StringBuilder shorty()
+    {
+        int helper = 0;
+        StringBuilder out = new StringBuilder();
+        for (char s : this.str.toCharArray())
+        {
+            helper++;
+            if (helper % 2 == 1) out.append(s);
+        }
+        return out;
+    }
+
+    public StringBuilder invert()
+    {
+        StringBuilder out = new StringBuilder();
+        for (char s : this.str.toCharArray())
+        {
+            out.insert(0, s);
+        }
+        return out;
+    }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        StringAnalysis my_str = new MyString("Hello, World!");
+        System.out.println(my_str.counter());
+        System.out.println(my_str.shorty());
+        System.out.println(my_str.invert());
+    }
+}
