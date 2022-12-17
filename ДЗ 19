@@ -1,0 +1,103 @@
+import java.util.Objects;
+import java.util.Scanner;
+
+
+class User
+{
+    String FIO;
+    String INN;
+    User before;
+    User after;
+
+    public User(String FIO, String INN) {
+        this.FIO = FIO;
+        this.INN = INN;
+    }
+
+    public User(String FIO, String INN, User before) {
+        this.FIO = FIO;
+        this.INN = INN;
+        this.before = before;
+    }
+}
+class DataBase
+{
+    User first;
+    User last;
+    int total = 0;
+
+    public void add(String FIO, String INN)
+    {
+        if (this.first == null)
+        {
+            this.first = new User(FIO, INN);
+            this.last = this.first;
+        }
+        else
+        {
+            this.last = new User(FIO, INN, this.last);
+            this.last.before.after = this.last;
+        }
+        this.total++;
+    }
+
+    public void find(String FIO, String INN) throws BadFileNameException {
+        User checker = this.first;
+        do
+        {
+            if (Objects.equals(checker.FIO, FIO))
+            {
+                try
+                {
+                    if (!Objects.equals(checker.INN, INN))
+                    {
+                        throw new BadFileNameException("ИНН не для этого пользователя!");
+                    }
+                    System.out.println(INN + " для пользователя " + FIO + " действителен.");
+                }
+                catch (BadFileNameException e)
+                {
+                    System.out.println("ИНН не для этого пользователя!");
+                }
+                break;
+            }
+            checker = checker.after;
+        } while (checker != this.last);
+        if (checker == this.last)
+        {
+            if (Objects.equals(checker.FIO, FIO))
+            {
+                try
+                {
+                    if (!Objects.equals(checker.INN, INN))
+                    {
+                        throw new BadFileNameException("ИНН не для этого пользователя!");
+                    }
+                    System.out.println(INN + " для пользователя " + FIO + " действителен.");
+                }
+                catch (BadFileNameException e)
+                {
+                    System.out.println("ИНН не для этого пользователя!");
+                }
+            }
+            else System.out.println("Такого пользователя не существует!");
+        }
+    }
+}
+
+class BadFileNameException extends Exception {
+    BadFileNameException(String errorMessage){
+        super(errorMessage);
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) throws BadFileNameException {
+        DataBase job = new DataBase();
+        job.add("Пеньков Михаил Петрович", "123456789");
+        job.add("Воронков Сергей Дмитриевич", "111111111");
+        job.add("Глинка Светлана Юрьевна", "123212321");
+        job.find("Воронков Сергей Дмитриевич", "111111111");
+    }
+}
