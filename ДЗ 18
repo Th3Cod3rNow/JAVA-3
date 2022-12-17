@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+class Exception1
+{
+    public static void exceptionDemo()
+    {
+        try { System.out.println(2 / 0); }
+        catch ( ArithmeticException e ) { System.out.println("Деление на 0!"); }
+    }
+}
+
+class Exception2
+{
+    public static void exceptionDemo()
+    {
+        Scanner myScanner = new Scanner(System.in);
+        System.out.print("Enter an integer ");
+        String intString = myScanner.next();
+        try
+        {
+            int i = Integer.parseInt(intString);
+            try { System.out.println(2 / i); }
+            catch (ArithmeticException e) { System.out.println("Деление на 0!"); }
+        }
+        catch (NumberFormatException e) { System.out.println("Неверный формат числа!"); }
+    }
+}
+
+class ThrowsDemo {
+    public static void printMessage(String key)
+    {
+        try
+        {
+            String message = getDetails(key);
+            System.out.println( message );
+        }
+        catch (NullPointerException e) { System.out.println("Неверный ключ!"); }
+    }
+    public static String getDetails(String key)
+    {
+        if (key == null) { throw new NullPointerException("Ключ = null"); }
+        return "data - " + key;
+    }
+}
+
+
+
+public class Main {
+    public static void main(String[] args)
+    {
+        ThrowsDemo.printMessage(null);
+        ThrowsDemo.printMessage("A");
+    }
+}
